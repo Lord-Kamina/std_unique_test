@@ -14,22 +14,20 @@ int main() {
     srand(time(NULL));
     int rnum;
     Note n = Note();
-    for (unsigned i = 0; i <= 70; i++) {
+    for (unsigned i = 1; i <= 70; i++) {
         n.begin = i;
         n.note = i;
         rnum = rand()%10;
         n.end = i + rnum;
-        std::clog << "Generated random number: " << rnum << std::endl;
         n.syllable = (rnum > 5) ? "test" : "test2";
         n.type = (rnum > 5) ? Note::GOLDEN : Note::NORMAL;
         s1.push_back(n);
     }
-    for (unsigned i = 0; i <= 70; i++) {
+    for (unsigned i = 1; i <= 70; i++) {
         n.begin = i;
         n.note = i;
         rnum = rand()%10;
         n.end = i + rnum;
-        std::clog << "Generated random number: " << rnum << std::endl;
         n.syllable = (rnum > 5) ? "test" : "test2";
         n.type = (rnum > 5) ? Note::GOLDEN : Note::NORMAL;
         s2.push_back(n);
@@ -42,12 +40,37 @@ int main() {
     std::clog << "Last note of test..." << " (" << test->syllable << ")" << ", begin: " << test->begin << ", end: " << test->end << ", type: " << Note::str_type(test->type) << std::endl;
     ++test;
     std::clog << "Previous to Last note of test..." << " (" << test->syllable << ")" << ", begin: " << test->begin << ", end: " << test->end << ", type: " << Note::str_type(test->type) << std::endl;
-    std::unique(merged.begin(), merged.end(), Note::equal);
+    auto newEnd = std::unique(merged.begin(), merged.end(), Note::equal);
+    merged.erase(newEnd,merged.end());
     test = merged.rbegin();
     std::clog << "Last note of test... (after unique)" << " (" << test->syllable << ")" << ", begin: " << test->begin << ", end: " << test->end << ", type: " << Note::str_type(test->type) << std::endl;
     for (size_t pointer = merged.size(); pointer >= 100; --pointer) {
     ++test;
         std::clog << "Test note at position: " << pointer << "(after unique)..." << " (" << test->syllable << ")" << ", begin: " << test->begin << ", end: " << test->end << ", type: " << Note::str_type(test->type) << std::endl;
+    }
+    unsigned randi;
+    std::vector<unsigned> i1, i2, mergedi;
+    for (unsigned i = 1; i <= 70; i++) {
+        randi = rand()%30;
+        i1.push_back(randi);
+    }
+    for (unsigned i = 1; i <= 70; i++) {
+        randi = rand()%30;
+        i2.push_back(randi);
+    }
+    std::clog << "Last int in i1: " << i1.back() << std::endl;
+    std::clog << "Last int in i2: " << i2.back() << std::endl;
+    std::merge(i1.begin(), i1.end(), i2.begin(), i2.end(), std::back_inserter(mergedi));
+    std::clog << "Last int in mergedi: " << mergedi.back() << std::endl;
+    auto newendi = std::unique(mergedi.begin(), mergedi.end());
+    mergedi.erase(newendi, mergedi.end());
+    auto testi = mergedi.rbegin();
+    std::clog << "Last int in mergedi (after unique): " << mergedi.back() << std::endl;
+    ++testi;
+    std::clog << "Previous to last int in mergedi (after unique): " << *testi << std::endl;
+    for (size_t pointer = mergedi.size(); pointer >= 100; --pointer) {
+        ++testi;
+        std::clog << "int at position: " << pointer << "(after unique)..." << *testi << std::endl;
     }
 }
 

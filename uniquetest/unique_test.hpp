@@ -54,6 +54,9 @@ struct Note {
         if (a.type == Note::SLEEP) return (a.type == b.type);
         return (a.begin == b.begin && a.end == b.end && a.note == b.note && a.type == b.type);
     }
+    static bool intcomp(unsigned& a, unsigned& b) {
+        return (a == b);
+    }
 };
 typedef std::vector<Note> Notes;
 
